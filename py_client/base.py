@@ -1,11 +1,11 @@
 import os
 
 import requests
-from auth import SECRECT_FILE, authenticate
+from auth import SECRET_FILE, authenticate
 
 # Check for the existence of the secret file
-if os.path.exists(SECRECT_FILE):
-    with open(SECRECT_FILE, "r") as fp:
+if os.path.exists(SECRET_FILE):
+    with open(SECRET_FILE, "r") as fp:
         token = fp.read().strip()
 else:
     # Authenticate and obtain the token
@@ -69,20 +69,19 @@ def update_todo_task(
     print("*" * 4, f" {endpoint} ", "*" * 4)
     response = requests.put(endpoint, json=json_payload, headers=headers)
     try:
-        # json_response = response.json()
-
-        # print(response.status_code)
-        # print("Updated data: ", json_response)
-        with open("update.html", "wb") as fp:
-            fp.write(response.content)
-        print(response.content)
+        if response.status_code == 200:
+            json_response = response.json()
+            print("Updated data:", json_response)
+            return json_response
+        else:
+            print(f"Error: Status code {response.status_code}")
+            print(response.content.decode())
     except requests.ConnectionError:
         raise Exception("Connection Error")
     except requests.JSONDecodeError:
         raise Exception("JSON error")
     except requests.RequestException as err:
         raise Exception(f"Request Error Exception: {err}")
-    # return json_response
 
 
 def delete_todo_task(
@@ -93,17 +92,23 @@ def delete_todo_task(
     response = requests.delete(endpoint, headers=headers)
 
     try:
-        if response.status_code == 200:
+        if response.status_code == 204:
+            # 204 No Content - successful deletion
+            print("Task deleted successfully (No Content)")
+            return response
+        elif response.status_code == 200:
             json_response = response.json()
-            print("Deleted data: ", json_response)
+            print("Deleted data:", json_response)
+            return response
         else:
-            print(response.json())
-        return response
-        # print(response.content)
+            print(f"Error: Status code {response.status_code}")
+            try:
+                print(response.json())
+            except requests.JSONDecodeError:
+                print(response.content.decode())
+            return response
     except requests.ConnectionError:
         raise Exception("Connection Error")
-    except requests.JSONDecodeError:
-        raise Exception("JSON error")
     except requests.RequestException as err:
         raise Exception(f"Request Error Exception: {err}")
 

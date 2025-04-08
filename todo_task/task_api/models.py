@@ -41,5 +41,12 @@ class TodoTask(models.Model):
 
     objects = TodoManager()
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["user", "completed"]),
+            models.Index(fields=["user", "updated"]),
+        ]
+        ordering = ["-updated"]
+
     def __str__(self) -> str:
         return self.task

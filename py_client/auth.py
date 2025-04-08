@@ -2,7 +2,7 @@ from getpass import getpass
 
 import requests
 
-SECRECT_FILE = "SECRET"
+SECRET_FILE = "SECRET"
 AUTH_ENDPOINT = "http://localhost:8000/api/todos/auth/"
 
 
@@ -17,11 +17,11 @@ def authenticate(endpoint=AUTH_ENDPOINT, save=True):
         token = get_auth_response.json()["token"]
         print(f"Auth response: {token}")
         if save:
-            with open(SECRECT_FILE, "w") as fp:
+            with open(SECRET_FILE, "w") as fp:
                 fp.write(token)
         return token
     except requests.JSONDecodeError:
-        raise ("JSON response invalid")
+        raise Exception("JSON response invalid")
     # print(get_auth_response.json())
 
 

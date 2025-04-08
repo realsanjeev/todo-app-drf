@@ -9,7 +9,7 @@ if __name__ == "__main__":
             print("Please enter valid id value in (integer type)")
 
     task = input("Enter the Task title: ")
-    description = input("Enter the Task Discription: ")
+    description = input("Enter the Task Description: ")
     new_data = {"task": task, "description": description}
     endpoint = f"http://localhost:8000/api/todos/{id}/update/"
     update_todo_task(endpoint=endpoint, json_payload=new_data)

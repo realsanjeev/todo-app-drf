@@ -35,16 +35,16 @@ To access the application features, open your web browser and go to:
 http://localhost:8000/
 ```
 
-For API functionality, use the following endpoint(sample testing is in `client` dir to test api):
+For API functionality, use the following endpoint(sample testing is in `py_client` dir to test api):
 ```
 http://localhost:8000/api/
 ```
 
 ### Step 5: Testing API Functionality
 
-Explore different REST API functionalities using the `client` directory provided for testing purposes.
+Explore different REST API functionalities using the `py_client` directory provided for testing purposes.
 
-## Todo Task API 
+## Todo Task API
 
 The **Todo Task API Framework** provides robust API responses tailored for seamless integration with front-end web applications, such as React.js projects. It utilizes `rest_framework` to enable essential features:
 

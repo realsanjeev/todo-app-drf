@@ -43,7 +43,7 @@ def signup_view(request):
             )
             messages.success(request, "Your account has been created successfully.")
             login(request, user)
-            return redirect("todos:login")
+            return redirect("todos:index")
 
     return render(request, "account/signup.html")
 
@@ -52,7 +52,6 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(username, password)
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -74,6 +73,12 @@ def logout_view(request):
 def add(request, *args, **kwargs):
     task = request.POST.get("task")
     desc = request.POST.get("desc")
+
+    # Validate task is not empty
+    if not task or task.strip() == "":
+        messages.error(request, "Task cannot be empty.")
+        return redirect("todos:index")
+
     if desc is None:
         desc = task
 

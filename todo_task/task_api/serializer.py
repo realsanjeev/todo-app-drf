@@ -14,6 +14,7 @@ class TodoSerializer(serializers.ModelSerializer):
             "task",
             "description",
             "completed",
+            "public",
             "timestamp",
             "updated",
             "view_url",
@@ -24,7 +25,7 @@ class TodoSerializer(serializers.ModelSerializer):
         user = request.user
         if len(value) < 4:
             raise validators.ValidationError(
-                f"task: `{value}`; length tooo short to take it as task"
+                f"task: `{value}`; length too short to take it as task"
             )
         qs = TodoTask.objects.filter(user=user, task__iexact=value)
         if qs.exists():

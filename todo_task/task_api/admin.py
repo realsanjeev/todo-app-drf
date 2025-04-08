@@ -5,7 +5,7 @@ from task_api.models import TodoTask
 # Register your models here.
 class TodoTaskAdmin(admin.ModelAdmin):
     list_display = ("user", "task", "completed", "updated", "public")
-    list_fileter = ("completed", "public", "timestamp", "updated")
+    list_filter = ("completed", "public", "timestamp", "updated")
     search_fields = ("timestamp", "updated")
 
     exclude = ["timestamp", "updated"]
